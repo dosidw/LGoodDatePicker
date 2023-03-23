@@ -1181,16 +1181,25 @@ public class CalendarPanel extends JPanel {
   private void populateYearPopupMenu(int middleYear) {
     final int firstYearDifference = -11;
     final int lastYearDifference = +11;
+    Integer firstLegalYear = null;
+    Integer lastLegalYear = null;
+    //check DateVetoPolicyMinimumMaximumDate to not show years that are not in range anyway
+    if (settings.getDateRangeLimits().firstDate != null) {
+      firstLegalYear = settings.getDateRangeLimits().firstDate.getYear();
+    }
+    if (settings.getDateRangeLimits().lastDate != null) {
+      lastLegalYear = settings.getDateRangeLimits().lastDate.getYear();
+    }
     popupYear.removeAll();
     //optional up arrow to show earlier years
-    if (settings.getYearSelectScroll()) {
+    if (settings.getYearSelectScroll() && (firstLegalYear == null || middleYear + firstYearDifference > firstLegalYear)) {
       popupYear.add(
         new JMenuItem(
           //black up-pointing triangle
           new AbstractAction("\u25b2") {
             @Override
             public void actionPerformed(ActionEvent e) {
-              populateYearPopupMenu(middleYear + firstYearDifference - lastYearDifference - 1);
+              populateYearPopupMenu(middleYear - (lastYearDifference - firstYearDifference + 1));
               Point menuLocation = getMonthOrYearMenuLocation(labelYear, popupYear);
               popupYear.show(monthAndYearInnerPanel, menuLocation.x, menuLocation.y);
             }
@@ -1204,6 +1213,11 @@ public class CalendarPanel extends JPanel {
       // This try block handles exceptions that can occur at LocalDate.MAX.
       try {
         int choiceYear = middleYear + yearDifference;
+        //do not show years that are not valid anyway
+        if ((firstLegalYear != null && choiceYear < firstLegalYear)
+          || (lastLegalYear != null && choiceYear > lastLegalYear)) {
+          continue;
+        }
         String choiceYearMonthString = String.valueOf(choiceYear);
         popupYear.add(
             new JMenuItem(
@@ -1219,14 +1233,14 @@ public class CalendarPanel extends JPanel {
       }
     }
   //optional down arrow to show earlier years
-    if (settings.getYearSelectScroll()) {
+    if (settings.getYearSelectScroll() && (lastLegalYear == null || middleYear + lastYearDifference < lastLegalYear)) {
       popupYear.add(
         new JMenuItem(
           //black down-pointing triangle
           new AbstractAction("\u25bc") {
             @Override
             public void actionPerformed(ActionEvent e) {
-              populateYearPopupMenu(middleYear - firstYearDifference + lastYearDifference + 1);
+              populateYearPopupMenu(middleYear + (lastYearDifference - firstYearDifference + 1));
               Point menuLocation = getMonthOrYearMenuLocation(labelYear, popupYear);
               popupYear.show(monthAndYearInnerPanel, menuLocation.x, menuLocation.y);
             }
