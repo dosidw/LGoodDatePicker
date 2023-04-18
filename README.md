@@ -1,3 +1,11 @@
+# Fork:
+
+Some minor changes, see branch dosi_releases. Needed until main project merges that stuff.
+
+Deployed locally with for us with:
+
+mvn install:install-file -Dfile=target/LGoodDatePicker-11.3.0_dosi.jar -Dsources=target/LGoodDatePicker-11.3.0_dosi-sources.jar -Djavadoc=target/LGoodDatePicker-11.3.0_dosi-javadoc.jar -DpomFile=target/LGoodDatePicker-11.3.0_dosi.pom -Dpackaging=jar -DlocalRepositoryPath=/Y/AD/02_XYZ-maven-repository -DcreateChecksum=true
+
 # LGoodDatePicker
 Java Swing Date Picker. Easy to use, good looking, nice features, and localized. Uses the JSR-310 standard. 
 
