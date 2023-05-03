@@ -24,7 +24,7 @@ plugins in this file operate inside the "package" and "install" phases.
     <groupId>com.github.lgooddatepicker</groupId>
     <artifactId>LGoodDatePicker</artifactId>
     <version>11.3.0</version>
-    <packaging>bundle</packaging>
+    <packaging>jar</packaging>
     <name>LGoodDatePicker</name>
     <description>Java Swing Date Picker. Easy to use, good looking, nice features, and
         localized. Uses the JSR-310 standard.</description>
@@ -195,7 +195,7 @@ plugins in this file operate inside the "package" and "install" phases.
                 </configuration>
             </plugin>
             
-            <plugin>
+            <!-- plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <version>5.1.1</version>
@@ -223,7 +223,7 @@ plugins in this file operate inside the "package" and "install" phases.
                         </Import-Package>
                     </instructions>
                 </configuration>
-            </plugin>
+            </plugin-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
